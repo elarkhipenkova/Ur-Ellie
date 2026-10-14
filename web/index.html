@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080707">
+  <title>ELINA PRIVATE</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #080707;
+      color: #f8f3f3;
+      font-family: -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+    }
+    .page {
+      max-width: 480px;
+      margin: auto;
+      padding: 24px 18px 40px;
+    }
+    header {
+      text-align: center;
+      padding: 12px 0 22px;
+      letter-spacing: 4px;
+      font-size: 13px;
+    }
+    header span { color: #d7a2b5; }
+    .hero {
+      position: relative;
+      height: 390px;
+      overflow: hidden;
+      border-radius: 5px;
+      background: #211619;
+    }
+    .hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 35%;
+      display: block;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 45% 0 0;
+      background: linear-gradient(transparent, rgba(8,7,7,.9));
+    }
+    .hero-title {
+      position: absolute;
+      z-index: 1;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+    }
+    .eyebrow {
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: #e0b5c4;
+    }
+    h1 {
+      margin: 8px 0;
+      font-family: Georgia, serif;
+      font-size: 34px;
+      font-weight: 400;
+      letter-spacing: 1px;
+    }
+    .intro {
+      color: #bcb1b3;
+      font-size: 13px;
+      line-height: 1.6;
+      text-align: center;
+      margin: 22px 8px 26px;
+    }
+    .section-title {
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: #d7a2b5;
+      margin: 28px 0 14px;
+    }
+    .plan {
+      padding: 23px 20px;
+      margin: 13px 0;
+      border: 1px solid #514247;
+      border-radius: 5px;
+      background: #f4eeee;
+      color: #211719;
+    }
+    .plan.premium {
+      background: linear-gradient(135deg, #531b2b, #260d16);
+      border-color: #814354;
+      color: #fff5f6;
+    }
+    .plan-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+    .plan h2 {
+      font-family: Georgia, serif;
+      font-weight: 400;
+      font-size: 25px;
+      margin: 0;
+    }
+    .tag {
+      font-size: 9px;
+      letter-spacing: 1px;
+      border: 1px solid #a17c88;
+      padding: 6px 8px;
+    }
+    .description {
+      font-size: 12px;
+      line-height: 1.6;
+      opacity: .75;
+      margin: 12px 0 18px;
+    }
+    .price {
+      font-family: Georgia, serif;
+      font-size: 25px;
+      margin-bottom: 17px;
+    }
+    .price small {
+      font-family: Arial, sans-serif;
+      font-size: 11px;
+      opacity: .7;
+    }
+    button {
+      width: 100%;
+      border: 0;
+      padding: 15px;
+      background: #211719;
+      color: white;
+      font-size: 11px;
+      letter-spacing: 2px;
+      cursor: pointer;
+    }
+    .premium button {
+      background: #f4e8eb;
+      color: #38131e;
+    }
+    footer {
+      color: #786b6e;
+      font-size: 10px;
+      text-align: center;
+      line-height: 1.7;
+      margin-top: 28px;
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>ELINA <span>PRIVATE</span></header>
+
+    <section class="hero">
+      <img src="hero.jpg" alt="Elina">
+      <div class="hero-title">
+        <div class="eyebrow">YOUR PRIVATE WORLD</div>
+        <h1>Closer to me.</h1>
+      </div>
+    </section>
+
+    <p class="intro">
+      Добро пожаловать в мой приватный мир.
+      Выбери подписку и открой доступ к эксклюзивному контенту.
+    </p>
+
+    <div class="section-title">CHOOSE YOUR ACCESS</div>
+
+    <section class="plan">
+      <div class="plan-top">
+        <h2>Standard</h2>
+        <span class="tag">30 DAYS</span>
+      </div>
+      <p class="description">
+        Доступ к приватному каналу и эксклюзивным публикациям.
+      </p>
+      <div class="price">Цена скоро появится</div>
+      <button onclick="choosePlan('standard')">CHOOSE STANDARD</button>
+    </section>
+
+    <section class="plan premium">
+      <div class="plan-top">
+        <h2>Premium</h2>
+        <span class="tag">90 DAYS</span>
+      </div>
+      <p class="description">
+        Расширенный доступ к моему приватному пространству.
+      </p>
+      <div class="price">Цена скоро появится</div>
+      <button onclick="choosePlan('premium')">CHOOSE PREMIUM</button>
+    </section>
+
+    <footer>
+      PRIVATE ACCESS · ELINA<br>
+      Подписка и доступ будут активированы после подключения оплаты.
+    </footer>
+  </main>
+
+  <script>
+    const tg = window.Telegram?.WebApp;
+    if (tg) {
+      tg.ready();
+      tg.expand();
+    }
+
+    function choosePlan(plan) {
+      if (tg) {
+        tg.showAlert(
+          plan === 'standard'
+            ? 'Ты выбрала Standard 💕 Оплата скоро появится.'
+            : 'Ты выбрала Premium 🖤 Оплата скоро появится.'
+        );
+      } else {
+        alert(
+          plan === 'standard'
+            ? 'Ты выбрала Standard 💕'
+            : 'Ты выбрала Premium 🖤'
+        );
+      }
+    }
+  </script>
+</body>
+</html>
